@@ -11,7 +11,11 @@ namespace ECommerceAPI.Persistence.Contexts
 	public class ECommerceAPIDbContext : DbContext
 	{
 		public ECommerceAPIDbContext(DbContextOptions options) : base(options)
-		{ }
+		{
+			AppContext.SetSwitch("Npgsql.EnableLegacyTimestampBehavior", true);
+
+			AppContext.SetSwitch("Npgsql.DisableDateTimeInfinityConversions", true);
+		}
 
         public DbSet<Product> Products { get; set; }
         public DbSet<Order> Orders { get; set; }
