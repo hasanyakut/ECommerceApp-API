@@ -12,26 +12,24 @@ namespace ECommerceAPI.API.Controllers
 		readonly private IProductWriteRepository _productWriteRepository;
 		readonly private IProductReadRepository _productReadRepository;
 
-		public ProductController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository)
+		private readonly IOrderWriteRepository _orderWriteRepository;
+		private readonly IOrderReadRepository _orderReadRepository;
+		private readonly ICustomerWriteRepository _customerWriteRepository;
+
+		public ProductController(IProductWriteRepository productWriteRepository, IProductReadRepository productReadRepository, IOrderWriteRepository orderWriteRepository, ICustomerWriteRepository customerWriteRepository, IOrderReadRepository orderReadRepository)
 		{
 			_productWriteRepository = productWriteRepository;
 			_productReadRepository = productReadRepository;
+			_orderWriteRepository = orderWriteRepository;
+			_customerWriteRepository = customerWriteRepository;
+			_orderReadRepository = orderReadRepository;
 		}
 		[HttpGet]
 		public async Task GetAsync()
 		{
-			//await _productWriteRepository.AddRangeAsync(new()
-			//{
-			//	new() { Id = Guid.NewGuid(), Name = "Product1", Price = 100, CreatedDate = DateTime.Now, Stock = 10 },
-			//	new() { Id = Guid.NewGuid(), Name = "Product2", Price = 200, CreatedDate = DateTime.Now, Stock = 20 },
-			//	new() { Id = Guid.NewGuid(), Name = "Product3", Price = 400, CreatedDate = DateTime.Now, Stock = 30 },
-			//	new() { Id = Guid.NewGuid(), Name = "Product4", Price = 500, CreatedDate = DateTime.Now, Stock = 40 },
-			//});
-			//await _productWriteRepository.SaveAsync();
-
-			Product p = await _productReadRepository.GetByIdAsync("54aa89b3-1e3c-4b95-be99-bf32054dbe26",false);
-			p.Name = "Mehmet";
-			await _productWriteRepository.SaveAsync();
+			Order order = await _orderReadRepository.GetByIdAsync("349cde41-0e6c-4e31-95bc-10c76d3dc28d");
+			order.Address = "Istanbul";
+			await _orderWriteRepository.SaveAsync();
 		}
 
         [HttpGet("{id}")]
