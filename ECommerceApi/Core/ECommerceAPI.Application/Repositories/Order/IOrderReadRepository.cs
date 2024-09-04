@@ -9,6 +9,5 @@ namespace ECommerceAPI.Application.Repositories
 {
 	public interface IOrderReadRepository : IReadRepository<Order>
 	{
-		asdad
 	}
 }
